@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"errors"
-	"fmt"
 	"strings"
 	"tinygo.org/x/bluetooth"
 )
@@ -39,7 +38,6 @@ func NewMonocle() (*Monocle, error) {
 }
 
 func (m *Monocle) connectHandler(device bluetooth.Device, connected bool) {
-	fmt.Printf("connectHandler called with %v, %v\n", device, connected)
 	if m.device == nil {
 		return
 	}
@@ -66,10 +64,8 @@ func (m *Monocle) ConnectToAny(timeout time.Duration) error {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	defer wg.Wait()
-	fmt.Println("starting scan")
 	go func() {
 		err := m.adapter.Scan(func(adapter *bluetooth.Adapter, result bluetooth.ScanResult) {
-			fmt.Printf("scan found %v %+v\n", result.LocalName(), result)
 			if !result.AdvertisementPayload.HasServiceUUID(serviceUUID) {
 				return
 			}
@@ -94,7 +90,6 @@ func (m *Monocle) ConnectToAny(timeout time.Duration) error {
 	}
 	select {
 	case result := <-resultChan:
-		fmt.Printf("got result: %+v\n", result)
 		// We got a result, connect to it
 		device, err := m.adapter.Connect(result.Address, bluetooth.ConnectionParams{})
 		if err != nil {
