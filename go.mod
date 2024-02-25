@@ -1,4 +1,4 @@
-module monocle
+module github.com/floren/monocle
 
 go 1.21.5
 

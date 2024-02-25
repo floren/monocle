@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/floren/monocle/pkg/monocle"
 	"log"
-	"monocle/pkg/monocle"
 	"time"
 )
 
